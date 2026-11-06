@@ -1,4 +1,4 @@
-
+import API_URL from "../api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ function StudentDashboard() {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "http://localhost:5000/api/registrations/my-registrations",
+          `${API_URL}/api/registrations/my-registrations`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

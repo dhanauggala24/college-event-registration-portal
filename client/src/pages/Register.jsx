@@ -1,4 +1,4 @@
-
+import API_URL from "../api";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -46,7 +46,7 @@ function Register() {
     const fetchEvent = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/events/${eventId}`
+          `${API_URL}/api/events/${eventId}`
         );
 
         const data = await response.json();
@@ -90,7 +90,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/registrations/${eventId}`,
+        `${API_URL}/api/registrations/${eventId}`,
         {
           method: "POST",
           headers: {

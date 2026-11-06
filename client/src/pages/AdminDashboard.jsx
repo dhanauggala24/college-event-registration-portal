@@ -1,4 +1,4 @@
-
+import API_URL from "../api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminEventManagement from "../components/AdminEventManagement";
@@ -31,7 +31,7 @@ function AdminDashboard() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/protected/admin",
+          `${API_URL}/api/protected/admin`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ function AdminDashboard() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/create-admin",
+        `${API_URL}/api/auth/create-admin`,
         {
           method: "POST",
           headers: {

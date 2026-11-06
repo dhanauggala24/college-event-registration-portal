@@ -1,4 +1,4 @@
-
+import API_URL from "../api";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ function EventDetails() {
     const fetchEvent = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/events/${id}`
+          `${API_URL}/api/events/${id}`
         );
 
         const data = await response.json();

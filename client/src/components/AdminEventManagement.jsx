@@ -1,4 +1,4 @@
-
+import API_URL from "../api";
 import { useEffect, useState } from "react";
 
 function AdminEventManagement() {
@@ -24,7 +24,7 @@ function AdminEventManagement() {
   const fetchEvents = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/events"
+        `${API_URL}/api/events`
       );
 
       const data = await response.json();
@@ -66,7 +66,7 @@ function AdminEventManagement() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/events",
+        `${API_URL}/api/events`,
         {
           method: "POST",
           headers: {
@@ -121,7 +121,7 @@ function AdminEventManagement() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/events/${eventId}`,
+        `${API_URL}/api/events/${eventId}`,
         {
           method: "DELETE",
           headers: {
