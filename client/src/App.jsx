@@ -18,20 +18,18 @@ function App() {
       <Navbar />
 
       <Routes>
-        {/* Default page - Sign Up */}
+        {/* Default page: Student Sign Up */}
         <Route path="/" element={<Signup />} />
 
-        {/* Home page */}
+        {/* Public pages */}
         <Route path="/home" element={<Home />} />
-
-        {/* Events */}
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetails />} />
-        <Route path="/register" element={<Register />} />
 
-        {/* Authentication */}
-        <Route path="/login" element={<Login />} />
+        {/* Registration and authentication */}
+        <Route path="/register" element={<Register />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
 
         {/* Dashboards */}
         <Route path="/dashboard" element={<StudentDashboard />} />

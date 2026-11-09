@@ -1,6 +1,7 @@
+
 import API_URL from "../api";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,16 +18,13 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await response.json();
 
@@ -35,25 +33,23 @@ function Login() {
         return;
       }
 
-      // Verify selected login type
       if (data.user.role !== loginType) {
         setError(
-          `This account is not registered as ${loginType === "admin" ? "an Admin" : "a Student"}. Please select the correct login option.`
+          `This account is not registered as ${
+            loginType === "admin" ? "an Admin" : "a Student"
+          }. Please select the correct login option.`
         );
         return;
       }
 
-      // Save login information
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // Redirect based on selected role
-      if (loginType === "admin") {
+      if (data.user.role === "admin") {
         navigate("/admin-dashboard");
       } else {
         navigate("/dashboard");
       }
-
     } catch (err) {
       setError("Unable to connect to server. Please try again.");
     } finally {
@@ -62,57 +58,79 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <h1>CampusEvents Login</h1>
-      <p>Choose your login type to continue.</p>
-
-      <div className="login-options">
-        <button
-          type="button"
-          className={loginType === "student" ? "active" : ""}
-          onClick={() => {
-            setLoginType("student");
-            setError("");
-          }}
-        >
-          Student Login
-        </button>
-
-        <button
-          type="button"
-          className={loginType === "admin" ? "active" : ""}
-          onClick={() => {
-            setLoginType("admin");
-            setError("");
-          }}
-        >
-          Admin Login
-        </button>
+    <div className="login-page">
+      <div className="signup-background" aria-hidden="true">
+        <div className="signup-slide slide-one"></div>
+        <div className="signup-slide slide-two"></div>
+        <div className="signup-slide slide-three"></div>
+        <div className="signup-slide slide-four"></div>
       </div>
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      <div className="signup-overlay"></div>
 
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+      <div className="login-card">
+        <div className="login-header">
+          <h1>CampusEvents</h1>
+          <h2>Welcome Back!</h2>
+          <p>Login to discover and participate in campus events.</p>
+        </div>
 
-        {error && <p className="error-message">{error}</p>}
+        <div className="login-options">
+          <button
+            type="button"
+            className={loginType === "student" ? "active" : ""}
+            onClick={() => {
+              setLoginType("student");
+              setError("");
+            }}
+          >
+            Student Login
+          </button>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+          <button
+            type="button"
+            className={loginType === "admin" ? "active" : ""}
+            onClick={() => {
+              setLoginType("admin");
+              setError("");
+            }}
+          >
+            Admin Login
+          </button>
+        </div>
+
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          {error && <p className="error-message">{error}</p>}
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        {loginType === "student" && (
+          <div className="login-footer">
+            <p>
+              Don't have an account? <Link to="/signup">Sign Up</Link>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
