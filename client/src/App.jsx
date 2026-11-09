@@ -18,12 +18,22 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Default page - Sign Up */}
+        <Route path="/" element={<Signup />} />
+
+        {/* Home page */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Events */}
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Authentication */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Dashboards */}
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
